@@ -49,7 +49,7 @@ public class DistanceService {
             case "yards":
                     return distance * 0.9144;
             default:
-                throw new IllegalArgumentException("Invalid distance unit: " + unit + "\nOnly 'Meters' and 'Yards' is allowed");
+                throw new IllegalArgumentException("Invalid distance unit: " + unit + "<br>Only 'Meters' and 'Yards' is allowed");
         }
     }
 
