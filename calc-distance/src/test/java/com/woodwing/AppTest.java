@@ -1,8 +1,11 @@
 package com.woodwing;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.woodwing.services.DistanceService;
 
 /**
  * Unit test for simple App.
@@ -16,5 +19,12 @@ public class AppTest
     public void shouldAnswerWithTrue()
     {
         assertTrue( true );
+    }
+
+    @Test
+    public void testGetDistanceSum() {
+        DistanceService service = new DistanceService();
+        String result = service.getDistanceSum("yards", 3, "meters", 5);
+        assertEquals("7.74 meters", result);
     }
 }
