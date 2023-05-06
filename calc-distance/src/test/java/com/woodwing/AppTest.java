@@ -22,9 +22,16 @@ public class AppTest
     }
 
     @Test
-    public void testGetDistanceSum() {
+    public void testGetDistanceSumInMeters() {
         DistanceService service = new DistanceService();
-        String result = service.getDistanceSum("yards", 3, "meters", 5);
+        String result = service.getDistanceSum("yards", 3, "meters", 5, "meters");
         assertEquals("7.74 meters", result);
+    }
+
+    @Test
+    public void testGetDistanceSumInYards() {
+        DistanceService service = new DistanceService();
+        String result = service.getDistanceSum("yards", 3, "meters", 5, "yards");
+        assertEquals("8.47 yards", result);
     }
 }
