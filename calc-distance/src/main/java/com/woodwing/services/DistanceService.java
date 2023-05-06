@@ -16,18 +16,21 @@ public class DistanceService {
             @PathVariable double distance2) {
 
         try {
+            unit1 = unit1.toLowerCase();
+            unit2 = unit2.toLowerCase();
+            
             double distanceInMeters1 = convertToMeters(distance1, unit1);
             double distanceInMeters2 = convertToMeters(distance2, unit2);
             double distanceSumInMeters = distanceInMeters1 + distanceInMeters2;
             String unit = "meters";
             double distanceSum = distanceSumInMeters;
-            if (unit1.equals("feet") || unit2.equals("feet")) {
-                distanceSum = convertFromMeters(distanceSumInMeters, "feet");
-                unit = "feet";
-            } else if (unit1.equals("miles") || unit2.equals("miles")) {
-                distanceSum = convertFromMeters(distanceSumInMeters, "miles");
-                unit = "miles";
-            }
+            // if (unit1.equals("feet") || unit2.equals("feet")) {
+            //     distanceSum = convertFromMeters(distanceSumInMeters, "feet");
+            //     unit = "feet";
+            // } else if (unit1.equals("miles") || unit2.equals("miles")) {
+            //     distanceSum = convertFromMeters(distanceSumInMeters, "miles");
+            //     unit = "miles";
+            // }
             return String.format("%.2f %s", distanceSum, unit);
 
         } catch (Exception e) {
@@ -39,25 +42,27 @@ public class DistanceService {
         switch (unit) {
             case "meters":
                 return distance;
-            case "feet":
-                return distance * 0.3048;
-            case "miles":
-                return distance * 1609.34;
+            // case "feet":
+            //     return distance * 0.3048;
+            // case "miles":
+            //     return distance * 1609.34;
+            case "yards":
+                    return distance * 0.9144;
             default:
-                throw new IllegalArgumentException("Invalid distance unit: " + unit);
+                throw new IllegalArgumentException("Invalid distance unit: " + unit + "\nOnly 'Meters' and 'Yards' is allowed");
         }
     }
 
-    private double convertFromMeters(double distanceInMeters, String unit) {
-        switch (unit) {
-            case "meters":
-                return distanceInMeters;
-            case "feet":
-                return distanceInMeters / 0.3048;
-            case "miles":
-                return distanceInMeters / 1609.34;
-            default:
-                throw new IllegalArgumentException("Invalid distance unit: " + unit);
-        }
-    }
+    // private double convertFromMeters(double distanceInMeters, String unit) {
+    //     switch (unit) {
+    //         case "meters":
+    //             return distanceInMeters;
+    //         case "feet":
+    //             return distanceInMeters / 0.3048;
+    //         case "miles":
+    //             return distanceInMeters / 1609.34;
+    //         default:
+    //             throw new IllegalArgumentException("Invalid distance unit: " + unit);
+    //     }
+    // }
 }
