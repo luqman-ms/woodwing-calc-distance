@@ -8,27 +8,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/distance")
 public class DistanceService {
-    
+
     @GetMapping("/sum/{unit1}/{distance1}/{unit2}/{distance2}")
     public String getDistanceSum(@PathVariable String unit1,
-                                 @PathVariable double distance1,
-                                 @PathVariable String unit2,
-                                 @PathVariable double distance2) {
-        double distanceInMeters1 = convertToMeters(distance1, unit1);
-        double distanceInMeters2 = convertToMeters(distance2, unit2);
-        double distanceSumInMeters = distanceInMeters1 + distanceInMeters2;
-        String unit = "meters";
-        double distanceSum = distanceSumInMeters;
-        if (unit1.equals("feet") || unit2.equals("feet")) {
-            distanceSum = convertFromMeters(distanceSumInMeters, "feet");
-            unit = "feet";
-        } else if (unit1.equals("miles") || unit2.equals("miles")) {
-            distanceSum = convertFromMeters(distanceSumInMeters, "miles");
-            unit = "miles";
+            @PathVariable double distance1,
+            @PathVariable String unit2,
+            @PathVariable double distance2) {
+
+        try {
+            double distanceInMeters1 = convertToMeters(distance1, unit1);
+            double distanceInMeters2 = convertToMeters(distance2, unit2);
+            double distanceSumInMeters = distanceInMeters1 + distanceInMeters2;
+            String unit = "meters";
+            double distanceSum = distanceSumInMeters;
+            if (unit1.equals("feet") || unit2.equals("feet")) {
+                distanceSum = convertFromMeters(distanceSumInMeters, "feet");
+                unit = "feet";
+            } else if (unit1.equals("miles") || unit2.equals("miles")) {
+                distanceSum = convertFromMeters(distanceSumInMeters, "miles");
+                unit = "miles";
+            }
+            return String.format("%.2f %s", distanceSum, unit);
+
+        } catch (Exception e) {
+            return e.getMessage();
         }
-        return String.format("%.2f %s", distanceSum, unit);
     }
-    
+
     private double convertToMeters(double distance, String unit) {
         switch (unit) {
             case "meters":
@@ -41,7 +47,7 @@ public class DistanceService {
                 throw new IllegalArgumentException("Invalid distance unit: " + unit);
         }
     }
-    
+
     private double convertFromMeters(double distanceInMeters, String unit) {
         switch (unit) {
             case "meters":
