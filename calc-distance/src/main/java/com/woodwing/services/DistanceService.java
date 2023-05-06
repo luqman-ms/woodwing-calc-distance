@@ -1,20 +1,19 @@
 package com.woodwing.services;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Path("/distance")
+@RestController
+@RequestMapping("/distance")
 public class DistanceService {
     
-    @GET
-    @Path("/sum/{unit1}/{distance1}/{unit2}/{distance2}")
-    @Produces("text/plain")
-    public String getDistanceSum(@PathParam("unit1") String unit1,
-                                 @PathParam("distance1") double distance1,
-                                 @PathParam("unit2") String unit2,
-                                 @PathParam("distance2") double distance2) {
+    @GetMapping("/sum/{unit1}/{distance1}/{unit2}/{distance2}")
+    public String getDistanceSum(@PathVariable String unit1,
+                                 @PathVariable double distance1,
+                                 @PathVariable String unit2,
+                                 @PathVariable double distance2) {
         double distanceInMeters1 = convertToMeters(distance1, unit1);
         double distanceInMeters2 = convertToMeters(distance2, unit2);
         double distanceSumInMeters = distanceInMeters1 + distanceInMeters2;
